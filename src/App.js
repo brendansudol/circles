@@ -4,6 +4,17 @@ const { floor, random } = Math;
 const getRandomFloat = (min, max) => random() * (max - min) + min;
 const getRandomInt = (min, max) => floor(random() * (max - min + 1) + min);
 const getRandomSeed = () => getRandomInt(0, 1000);
+const sample = arr => arr[floor(random() * arr.length)];
+
+const COLORS = [
+  ["#ffe54d", "#5ac8e1"],
+  ["#fe7615", "#715941"],
+  ["#ffb959", "#f25c9a"],
+  ["#cde448", "#49dac6"],
+  ["#962a9b", "#77e1c2"],
+  ["#f1599a", "#e84c45"],
+  ["#ee6627", "#5d1993"]
+];
 
 const Circles = ({ colors, size = 500, seed = "12345" }) => {
   const jitterId1 = `jitter-1-${seed}`;
@@ -105,9 +116,9 @@ const Circles = ({ colors, size = 500, seed = "12345" }) => {
 };
 
 class App extends Component {
-  state = { seed: 12345 };
+  state = { key: random() };
 
-  refresh = () => this.setState({ seed: getRandomSeed() });
+  refresh = () => this.setState({ key: random() });
 
   render() {
     return (
@@ -116,7 +127,10 @@ class App extends Component {
           <button onClick={this.refresh}>refresh</button>
         </div>
         <div>
-          <Circles colors={["#60e4d3", "#ffe83b"]} seed={this.state.seed} />
+          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
+          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
+          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
+          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
         </div>
       </div>
     );
