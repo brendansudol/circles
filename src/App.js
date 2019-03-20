@@ -6,6 +6,10 @@ const getRandomInt = (min, max) => floor(random() * (max - min + 1) + min);
 const getRandomSeed = () => getRandomInt(0, 1000);
 const sample = arr => arr[floor(random() * arr.length)];
 
+const WIDTH = 800;
+const COLS = 3;
+const ROWS = 3;
+
 const COLORS = [
   ["#ffe54d", "#5ac8e1"],
   ["#fe7615", "#715941"],
@@ -16,7 +20,7 @@ const COLORS = [
   ["#ee6627", "#5d1993"]
 ];
 
-const Circles = ({ colors, size = 500, seed = "12345" }) => {
+const Circles = ({ colors, size = WIDTH, seed = "12345" }) => {
   const jitterId1 = `jitter-1-${seed}`;
   const jitterId2 = `jitter-2-${seed + 1}`;
 
@@ -25,7 +29,7 @@ const Circles = ({ colors, size = 500, seed = "12345" }) => {
   const radius2 = getRandomInt(radius1 * 0.95, radius1 * 1.05);
 
   return (
-    <svg width={size} height={size}>
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
       <defs>
         <filter id="texture-cloudy">
           <feTurbulence
@@ -122,17 +126,21 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div>
-          <button onClick={this.refresh}>refresh</button>
+      <>
+        <button className="absolute top-0 right-0 m1" onClick={this.refresh}>
+          refresh
+        </button>
+        <div className="p2 mx-auto" style={{ maxWidth: WIDTH }}>
+          <div className="flex flex-wrap">
+            {[...Array(COLS * ROWS)].map((_, i) => (
+              <div key={i} style={{ width: `${(1 / COLS) * 100}%` }}>
+                <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
+              </div>
+            ))}
+          </div>
+          <div />
         </div>
-        <div>
-          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
-          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
-          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
-          <Circles colors={sample(COLORS)} seed={getRandomSeed()} />
-        </div>
-      </div>
+      </>
     );
   }
 }

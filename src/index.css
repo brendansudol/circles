@@ -8,21 +8,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 svg {
-  border: 1px solid #000;
+  box-sizing: border-box;
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 svg circle {
   mix-blend-mode: multiply;
-}
-
-.container {
-  margin: 1rem auto;
-  padding: 1rem;
-  max-width: 1200px;
 }
